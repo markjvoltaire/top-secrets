@@ -14,7 +14,7 @@ describe('top-secrects routes', () => {
 
   it('signs a user up by sending a post route', async () => {
     const res = await request(app)
-      .post('/api/v1/users')
+      .post('/api/v1/users/signup')
       .send({ username: 'mark', password: 'helloworld' });
 
     expect(res.body).toEqual({ id: expect.any(String), username: 'mark' });
