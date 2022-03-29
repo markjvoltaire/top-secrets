@@ -2,7 +2,6 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const hats
 
 describe('top-secrects routes', () => {
   beforeEach(() => {
@@ -15,10 +14,9 @@ describe('top-secrects routes', () => {
 
   it('signs a user up by sending a post route', async () => {
     const res = await request(app)
-    .post('/api/v1/users')
-    .send({username: 'mark', password: 'helloworld'})
+      .post('/api/v1/users')
+      .send({ username: 'mark', password: 'helloworld' });
 
-
-    expect(res.body).toEqual({id: expect.any(String), username: 'mark'})
+    expect(res.body).toEqual({ id: expect.any(String), username: 'mark' });
   });
 });
