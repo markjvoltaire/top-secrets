@@ -23,7 +23,6 @@ describe('top-secrects routes', () => {
     expect(res.body).toEqual({
       id: expect.any(String),
       username: 'mark',
-      password: 'helloworld',
     });
   });
 });
