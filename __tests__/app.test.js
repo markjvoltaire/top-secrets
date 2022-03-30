@@ -35,6 +35,8 @@ describe('top-secrects routes', () => {
       .post('/api/v1/users/sessions')
       .send({ username: 'mark', password: 'helloworld' });
 
+    console.log('res', res);
+
     expect(res.body).toEqual({
       message: 'you are logged in now',
       user,
