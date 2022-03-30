@@ -25,7 +25,7 @@ describe('top-secrects routes', () => {
     });
   });
 
-  it('should sign a user in ', async () => {
+  it.only('should sign a user in ', async () => {
     const user = await UserService.hash({
       username: 'mark',
       password: 'helloworld',
@@ -39,7 +39,6 @@ describe('top-secrects routes', () => {
 
     expect(res.body).toEqual({
       message: 'you are logged in now',
-      user,
     });
   });
 });
