@@ -25,7 +25,7 @@ describe('top-secrects routes', () => {
     });
   });
 
-  it.only('should sign a user in ', async () => {
+  it('should sign a user in ', async () => {
     const user = await UserService.hash({
       username: 'mark',
       password: 'helloworld',
