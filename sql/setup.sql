@@ -4,7 +4,7 @@
 
 
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS tweets CASCADE;
+DROP TABLE IF EXISTS secrets CASCADE;
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
@@ -13,9 +13,11 @@ CREATE TABLE users (
 );
 
 
-CREATE TABLE tweets (
+CREATE TABLE secrets (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title TEXT NOT NULL,
-    content TEXT NOT NULL,
-    user_id BIGINT REFERENCES users(id)
-)
+    description TEXT NOT NULL,
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+INSERT INTO secrets (title, description) VALUES ('hello world', 'a message from cpu');

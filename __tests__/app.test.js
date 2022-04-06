@@ -4,6 +4,8 @@ const request = require('supertest');
 const app = require('../lib/app');
 const users = require('../lib/controllers/users');
 const UserService = require('../lib/services/UserService');
+const Secrets = require('../lib/models/Secrets');
+const { agent } = require('supertest');
 
 describe('top-secrects routes', () => {
   beforeEach(() => {
@@ -37,6 +39,60 @@ describe('top-secrects routes', () => {
 
     expect(res.body).toEqual({
       message: 'you are logged in now',
+    });
+  });
+
+  it('should get all secrets', async () => {
+    const secrets = await Secrets.getAll();
+    const agent = request.agent(app);
+
+    const user = await UserService.hash({
+      username: 'mark',
+      password: 'helloworld',
+    });
+
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ username: 'mark', password: 'helloworld' });
+
+    const res = await agent.get('/api/v1/secrets');
+    expect(res.body).toEqual([
+      {
+        createdAt: expect.any(String),
+        description: 'a message from cpu',
+        id: '1',
+        title: 'hello world',
+      },
+    ]);
+  });
+
+  it('should delete session', async () => {
+    const agent = request.agent(app);
+
+    const user = await UserService.hash({
+      username: 'mark',
+      password: 'helloworld',
+    });
+
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ username: 'mark', password: 'helloworld' });
+
+    const res = await agent.get('/api/v1/secrets');
+    expect(res.body).toEqual([
+      {
+        createdAt: expect.any(String),
+        description: 'a message from cpu',
+        id: '1',
+        title: 'hello world',
+      },
+    ]);
+
+    const deleteAgent = await agent.delete('/api/v1/users/sessions');
+    console.log('deleteAgent', deleteAgent.body);
+    expect(deleteAgent.body).toEqual({
+      success: true,
+      message: 'you signed out',
     });
   });
 });
